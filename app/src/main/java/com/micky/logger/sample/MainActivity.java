@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        String logFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "LoggerSample";
+        String logPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "LoggerSample";
         FormatStrategy cvsFormatStrategy = CsvFormatStrategy.newBuilder()
                 .tag("File tag")
-                .logFilePath(logFilePath)
-                .logFileName("mylog")
+                .logPath(logPath)
+                .logFile("mylog")
                 .build();
         Logger.addLogAdapter(new DiskLogAdapter(cvsFormatStrategy) {
             @Override

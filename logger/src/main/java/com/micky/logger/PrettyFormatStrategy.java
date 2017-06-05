@@ -1,5 +1,7 @@
 package com.micky.logger;
 
+import android.text.TextUtils;
+
 public class PrettyFormatStrategy implements FormatStrategy {
 
   /**
@@ -170,7 +172,7 @@ public class PrettyFormatStrategy implements FormatStrategy {
     int methodOffset = 0;
     boolean showThreadInfo = true;
     LogStrategy logStrategy;
-    String tag = "PRETTY_LOGGER";
+    String tag = "MICKY_LOGGER";
 
     private Builder() {
     }
@@ -196,7 +198,9 @@ public class PrettyFormatStrategy implements FormatStrategy {
     }
 
     public Builder tag(String tag) {
-      this.tag = tag;
+      if (!TextUtils.isEmpty(tag)) {
+        this.tag = tag;
+      }
       return this;
     }
 

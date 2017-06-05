@@ -89,8 +89,8 @@ public class CsvFormatStrategy implements FormatStrategy {
         private SimpleDateFormat dateFormat;
         private LogStrategy logStrategy;
         private String tag = "MICKY_LOGGER";
-        private String logFilePath;
-        private String logFileName;
+        private String logPath;
+        private String logFile;
 
         private Builder() {
         }
@@ -111,17 +111,24 @@ public class CsvFormatStrategy implements FormatStrategy {
         }
 
         public Builder tag(String tag) {
-            this.tag = tag;
+            if (!TextUtils.isEmpty(tag)) {
+                this.tag = tag;
+            }
             return this;
         }
 
-        public Builder logFilePath(String path) {
-            this.logFilePath = path;
+        public Builder logPath(String path) {
+            this.logPath = path;
             return this;
         }
 
-        public Builder logFileName(String fileName) {
-            this.logFileName = fileName;
+        /**
+         *
+         * @param fileName 文件名（不包含后缀)
+         * @return
+         */
+        public Builder logFile(String fileName) {
+            this.logFile = fileName;
             return this;
         }
 
@@ -133,21 +140,21 @@ public class CsvFormatStrategy implements FormatStrategy {
                 dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSS", Locale.UK);
             }
 
-            if (TextUtils.isEmpty(logFilePath)) {
-                logFilePath = getDefaultLogPath();
+            if (TextUtils.isEmpty(logPath)) {
+                logPath = getDefaultLogPath();
             } else {
-                File logPath = new File(logFilePath);
+                File logPath = new File(this.logPath);
                 if (logPath.exists() && !logPath.isDirectory()) {
-                    logFilePath = getDefaultLogPath();
+                    this.logPath = getDefaultLogPath();
                 }
             }
-            if (TextUtils.isEmpty(logFileName)) {
-                logFileName = "log";
+            if (TextUtils.isEmpty(logFile)) {
+                logFile = "log";
             }
             if (logStrategy == null) {
-                HandlerThread ht = new HandlerThread("AndroidFileLogger." + logFilePath);
+                HandlerThread ht = new HandlerThread("AndroidFileLogger." + logPath);
                 ht.start();
-                Handler handler = new DiskLogStrategy.WriteHandler(ht.getLooper(), logFilePath, logFileName, MAX_BYTES);
+                Handler handler = new DiskLogStrategy.WriteHandler(ht.getLooper(), logPath, logFile, MAX_BYTES);
                 logStrategy = new DiskLogStrategy(handler);
             }
             return new CsvFormatStrategy(this);
