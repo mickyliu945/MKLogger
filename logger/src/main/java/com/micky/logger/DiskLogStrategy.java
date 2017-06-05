@@ -95,6 +95,7 @@ public class DiskLogStrategy implements LogStrategy {
       }
 
       if (existingFile != null) {
+        long len = existingFile.length();
         if (existingFile.length() >= maxFileSize) {
           return newFile;
         }

@@ -83,7 +83,7 @@ public class CsvFormatStrategy implements FormatStrategy {
     }
 
     public static final class Builder {
-        private static final int MAX_BYTES = 500 * 1024; // 500K averages to a 4000 lines per file
+        private static final int MAX_BYTES = 5000 * 1024; // 500K averages to a 4000 lines per file
 
         private Date date;
         private SimpleDateFormat dateFormat;
