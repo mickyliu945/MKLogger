@@ -14,6 +14,16 @@ import com.micky.logger.PrettyFormatStrategy;
 
 import java.io.File;
 
+/**
+ * @Project LoggerSample
+ *
+ * @Description 全局异常捕获
+ *
+ * @Author Micky Liu
+ * @Email mickyliu@126.com
+ * @Date 2016-6-06 14:30
+ * @Version 1.0.0
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final boolean DEBUG = true;

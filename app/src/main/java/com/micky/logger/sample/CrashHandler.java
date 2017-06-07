@@ -5,16 +5,13 @@ import android.content.Context;
 import com.micky.logger.Logger;
 
 /**
- * @Project iSphere
- * @Packate com.hy.imp.main.common.util
+ * @Project LoggerSample
  *
  * @Description 全局异常捕获
  *
  * @Author Micky Liu
- * @Email liuhongwei@isphere.top
- * @Date 2016-03-09 14:40
- * @Company 北京华云合创科技有限公司成都分公司
- * @Copyright Copyright(C) 2016-2018
+ * @Email mickyliu@126.com
+ * @Date 2016-6-06 14:40
  * @Version 1.0.0
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
