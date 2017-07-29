@@ -50,33 +50,41 @@ public class PrettyFormatStrategy implements FormatStrategy {
   @Override
   public void log(int priority, String onceOnlyTag, String message) {
     String tag = formatTag(onceOnlyTag);
+    if (priority >= Logger.ERROR) {
 
-    logTopBorder(priority, tag);
-    logHeaderContent(priority, tag, methodCount);
+      logTopBorder(priority, tag);
+      logHeaderContent(priority, tag, methodCount);
 
-    //get bytes of message with system's default charset (which is UTF-8 for Android)
-    byte[] bytes = message.getBytes();
-    int length = bytes.length;
-    if (length <= CHUNK_SIZE) {
+      //get bytes of message with system's default charset (which is UTF-8 for Android)
+      byte[] bytes = message.getBytes();
+      int length = bytes.length;
+      if (length <= CHUNK_SIZE) {
+        if (methodCount > 0) {
+          logDivider(priority, tag);
+        }
+        logContent(priority, tag, message);
+        logBottomBorder(priority, tag);
+        return;
+      }
       if (methodCount > 0) {
         logDivider(priority, tag);
       }
-      logContent(priority, tag, message);
+
+      for (int i = 0; i < length; i += CHUNK_SIZE) {
+        int count = Math.min(length - i, CHUNK_SIZE);
+        //create a new String with system's default charset (which is UTF-8 for Android)
+        logContent(priority, tag, new String(bytes, i, count));
+      }
       logBottomBorder(priority, tag);
-      return;
+    } else {
+      logContent(priority, tag, new String(message.getBytes()));
     }
-    if (methodCount > 0) {
-      logDivider(priority, tag);
-    }
-    for (int i = 0; i < length; i += CHUNK_SIZE) {
-      int count = Math.min(length - i, CHUNK_SIZE);
-      //create a new String with system's default charset (which is UTF-8 for Android)
-      logContent(priority, tag, new String(bytes, i, count));
-    }
-    logBottomBorder(priority, tag);
   }
 
   private void logTopBorder(int logType, String tag) {
+    if (logType < Logger.ERROR) {
+      return;
+    }
     logChunk(logType, tag, TOP_BORDER);
   }
 

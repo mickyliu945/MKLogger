@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String a = "a";
                 a.substring(0, 2);
                 } catch (Exception e) {
-                    for (int i = 0; i <= 100; i++)
                     Logger.t("AAA").e(e, "This is error message.");
                 }
                 break;
